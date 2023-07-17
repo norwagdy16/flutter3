@@ -27,20 +27,31 @@ class _mainscreenState extends State<mainscreen> {
               itemCount: context.watch<TodosCubit>().todos.length,
               itemBuilder: (BuildContext context, int index) {
                 return ListTile(
-                  leading: Text(context.watch<TodosCubit>().todos[index].id.toString()),
-                  title: Text(context.watch<TodosCubit>().todos[index].title ?? "--"),
-                  subtitle: Text(context.watch<TodosCubit>().todos[index].completed.toString()),
+                  leading: Text(
+                      context.watch<TodosCubit>().todos[index].id.toString()),
+                  title: Text(
+                      context.watch<TodosCubit>().todos[index].title ?? "--"),
+                  subtitle: Text(context
+                      .watch<TodosCubit>()
+                      .todos[index]
+                      .completed
+                      .toString()),
                   trailing: Icon(Icons.adjust),
-                ); 
-            },
+                );
+              },
             );
-          }else {
+          } else {
             return Center(
               child: Text("there is error in this screen"),
             );
           }
         },
-        listener: (context, State) {},
+        listener: (context, State) {
+          if (State is TodosError) {
+            ScaffoldMessenger.of(context)
+                .showSnackBar(SnackBar(content: Text("we have an error")));
+          }
+        },
       ),
     );
   }
