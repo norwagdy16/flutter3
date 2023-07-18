@@ -15,6 +15,8 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     final _fromKey = GlobalKey<FormState>();
     final TextEditingController emailController = TextEditingController();
+    final TextEditingController passController = TextEditingController();
+    bool passToggle = true;
     // String email = "";
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 219, 166, 184),
@@ -27,10 +29,12 @@ class _HomePageState extends State<HomePage> {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 8, vertical: 16),
                       child: TextFormField(
+                          keyboardType: TextInputType.emailAddress,
                           controller: emailController,
                           decoration: const InputDecoration(
-                            border: UnderlineInputBorder(),
+                            border: OutlineInputBorder(),
                             labelText: 'Email',
+                            prefixIcon: Icon(Icons.email),
                           ),
                           // onChanged: (value) {
                           //   email = value;
@@ -41,13 +45,17 @@ class _HomePageState extends State<HomePage> {
                             }
                             return null;
                           })),
+
                   Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 8, vertical: 16),
                       child: TextFormField(
+                        keyboardType: TextInputType.emailAddress,
+                        controller: passController,
                         decoration: const InputDecoration(
-                          border: UnderlineInputBorder(),
+                          border: OutlineInputBorder(),
                           labelText: 'Password',
+                          prefixIcon: Icon(Icons.lock),
                         ),
                         validator: (value) {
                           if (value!.isEmpty) {
@@ -73,12 +81,13 @@ class _HomePageState extends State<HomePage> {
                                     email: emailController.text,
                                   )),
                         );
-                      } else{
+                      } else {
                         emailController.clear();
                       }
                     },
-                 
-                    child: MyBottom(label:"login",),
+                    child: MyBottom(
+                      label: "login",
+                    ),
                   ),
                 ]))),
       ),
