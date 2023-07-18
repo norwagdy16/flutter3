@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2/views/widget/mybottom.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -16,7 +17,6 @@ class _HomePageState extends State<HomePage> {
     final _fromKey = GlobalKey<FormState>();
     final TextEditingController emailController = TextEditingController();
     final TextEditingController passController = TextEditingController();
-    bool passToggle = true;
     // String email = "";
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 219, 166, 184),
@@ -73,7 +73,7 @@ class _HomePageState extends State<HomePage> {
                   InkWell(
                     onTap: () {
                       if (_fromKey.currentState!.validate()) {
-                        saveEmail(emailController.text);
+                        signinUsingfirebase(emailController.text,passController.text);
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -98,4 +98,12 @@ class _HomePageState extends State<HomePage> {
 saveEmail(String email) async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   prefs.setString("email", email);
+}
+
+signinUsingfirebase(String email, String password) async {
+  final userCredential = await FirebaseAuth.instance
+      .signInWithEmailAndPassword(email: email, password: password);
+  final user = userCredential.user;
+  print(user?.uid);
+  saveEmail(user!.email!);
 }

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "409025369438",
+    "project_id": "iti23training",
+    "storage_bucket": "iti23training.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:409025369438:android:33a8266258142f52072bcf",
+        "android_client_info": {
+          "package_name": "com.example.flutter_application_2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "409025369438-knemfp60at0ceivqumh3b0eebff50bs9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBFQYCrCVJWsKkTDsNR-q5ODcct-J6yLVo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "409025369438-knemfp60at0ceivqumh3b0eebff50bs9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
