@@ -1,8 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_2/views/makeup_list.dart';
+// import 'package:flutter_application_2/views/makeup_list.dart';
 import 'package:flutter_application_2/views/widget/mybottom.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'new_screen.dart';
+// import 'new_screen.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -71,16 +73,27 @@ class _HomePageState extends State<HomePage> {
                   //   child: ElevatedButton(
                   //     onPressed: () {
                   InkWell(
-                    onTap: () {
+                    onTap: () async {
                       if (_fromKey.currentState!.validate()) {
-                        signinUsingfirebase(emailController.text,passController.text);
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => secondpage(
-                                    email: emailController.text,
-                                  )),
-                        );
+                        bool loginResult = await signinUsingfirebase(
+                            emailController.text, passController.text);
+                        if (loginResult == true) {
+                              Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => MakeupList()),
+                          );
+                          // Navigator.push(
+                          //   context,
+                          //   MaterialPageRoute(
+                          //       builder: (context) => secondpage(
+                          //             email: emailController.text,
+                          //           )),
+                          // );
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text("login faild")));
+                        }
                       } else {
                         emailController.clear();
                       }
@@ -100,10 +113,19 @@ saveEmail(String email) async {
   prefs.setString("email", email);
 }
 
-signinUsingfirebase(String email, String password) async {
-  final userCredential = await FirebaseAuth.instance
-      .signInWithEmailAndPassword(email: email, password: password);
-  final user = userCredential.user;
-  print(user?.uid);
-  saveEmail(user!.email!);
+Future<bool> signinUsingfirebase(String email, String password) async {
+  bool result = false;
+  try {
+    UserCredential userCredential = await FirebaseAuth.instance
+        .signInWithEmailAndPassword(email: email, password: password);
+    final user = userCredential.user;
+    if (user != null) {
+      print(user?.uid);
+      saveEmail(user!.email!);
+      result = true;
+    }
+    return result;
+  } catch (e) {
+    return result;
+  }
 }
